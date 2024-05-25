@@ -4,6 +4,7 @@ import { BiUserCircle } from "react-icons/bi";
 import { BsCalendar2Date } from "react-icons/bs";
 import EditBook from "./EditBook";
 import { Link } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 
 const BookModal = ({
   title,
@@ -69,7 +70,16 @@ const BookModal = ({
             </svg>
           ))}
         </div>
-        {role === "author" ? <Link to={`/editbook/${id}`}>clickme</Link> : ""}
+        {role === "author" ? (
+          <Link to={`/editbook/${id}`}>
+            <div className="flex items-center">
+              <FaEdit size={50} />
+              <p>Edit Book</p>
+            </div>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
