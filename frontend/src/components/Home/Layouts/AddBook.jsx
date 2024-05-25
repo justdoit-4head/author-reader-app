@@ -60,6 +60,16 @@ function AddBookModal() {
 
       console.log(response);
       toast("Book succesfully created!");
+      setFormData({
+        cover: "",
+        title: "",
+        description: "",
+        genre: "",
+        publishDate: "",
+        price: "",
+        bookStatus: "",
+        tags: "",
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
       toast("An error occured!!");

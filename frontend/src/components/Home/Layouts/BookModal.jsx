@@ -5,6 +5,10 @@ import { BsCalendar2Date } from "react-icons/bs";
 import EditBook from "./EditBook";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import axios from "axios";
+import { BACKEND_ENDPOINT } from "../../../utils/constants";
+import { toast } from "react-toastify";
 
 const BookModal = ({
   title,
@@ -18,6 +22,18 @@ const BookModal = ({
 }) => {
   const role = localStorage.getItem("role");
 
+  const deleteBook = async () => {
+    const token = localStorage.getItem("token");
+    const response = await axios.delete(`${BACKEND_ENDPOINT}books/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response);
+    toast("book Deleted successfully, refresh to see changes!");
+  };
+
   return (
     <div
       className="fixed bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center"
@@ -25,7 +41,7 @@ const BookModal = ({
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="w-[600px] max-w-full h-[400px] bg-white rounded-xl p-4 flex flex-col relative"
+        className="w-[600px] max-w-full h-[500px] bg-white rounded-xl p-4 flex flex-col relative"
       >
         <AiOutlineClose
           className="absolute right-6 top-6 text-3xl text-red-600 cursor-pointer"
@@ -71,12 +87,22 @@ const BookModal = ({
           ))}
         </div>
         {role === "author" ? (
-          <Link to={`/editbook/${id}`}>
-            <div className="flex items-center">
-              <FaEdit size={50} />
-              <p>Edit Book</p>
+          <div className="flex space-x-40">
+            <div>
+              <Link to={`/editbook/${id}`}>
+                <div className="flex items-center">
+                  <FaEdit size={50} />
+                  <p>Edit Book</p>
+                </div>
+              </Link>
             </div>
-          </Link>
+            <div onClick={deleteBook} className="cursor-pointer">
+              <div className="flex items-center">
+                <RiDeleteBin6Fill size={50} />
+                <p>Delete Book</p>
+              </div>
+            </div>
+          </div>
         ) : (
           ""
         )}
