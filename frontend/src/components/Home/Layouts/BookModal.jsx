@@ -2,6 +2,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { PiBookOpenTextLight } from "react-icons/pi";
 import { BiUserCircle } from "react-icons/bi";
 import { BsCalendar2Date } from "react-icons/bs";
+import EditBook from "./EditBook";
+import { Link } from "react-router-dom";
 
 const BookModal = ({
   title,
@@ -13,6 +15,8 @@ const BookModal = ({
   displayAvgRating,
   onClose,
 }) => {
+  const role = localStorage.getItem("role");
+
   return (
     <div
       className="fixed bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center"
@@ -65,6 +69,7 @@ const BookModal = ({
             </svg>
           ))}
         </div>
+        {role === "author" ? <Link to={`/editbook/${id}`}>clickme</Link> : ""}
       </div>
     </div>
   );
